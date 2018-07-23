@@ -53,13 +53,13 @@ public class CasSupportJdbcAuditConfigurationTests {
 
     @Test
     public void verifyAuditManager() {
-        val time = LocalDate.now().minusDays(2);
-        val since = DateTimeUtils.dateOf(time);
+        val since = LocalDate.now().minusDays(2);
+        val time = DateTimeUtils.dateOf(LocalDate.now());
         val ctx = new AuditActionContext("casuser", "TEST", "TEST",
-            "CAS", since, "1.2.3.4",
+            "CAS", time, "1.2.3.4",
             "1.2.3.4");
         jdbcAuditTrailManager.record(ctx);
-        val results = jdbcAuditTrailManager.getAuditRecordsSince(time);
+        val results = jdbcAuditTrailManager.getAuditRecordsSince(since);
         assertFalse(results.isEmpty());
     }
 }
